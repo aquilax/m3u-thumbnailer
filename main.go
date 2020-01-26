@@ -57,17 +57,16 @@ func getJob(track m3u.Track, i, tracks int, success chan<- m3u.Track) func() {
 	return func() {
 		var b bytes.Buffer
 		fmt.Fprintf(&b, "[%d/%d] URI: %s Name: %s", i+1, tracks, track.URI, track.Name)
-		fileName := sanitize.BaseName(fmt.Sprintf("%s-%s", track.Name, time.Now().Format(time.RFC3339))) + ".png"
+		fileName := sanitize.BaseName(fmt.Sprintf("%s-%s", track.Name, time.Now().Format(time.RFC3339))) + ".jpg"
 		err := takeScreenshot(track.URI, fileName)
 		if err != nil {
-			fmt.Fprintln(&b, " ERROR")
+			fmt.Fprint(&b, " ERROR")
 			fmt.Println(b.String())
 			return
 		}
 		fmt.Fprint(&b, " Screenshot saved to: "+fileName)
 		fmt.Println(b.String())
 		success <- track
-		//success.Tracks = append(success.Tracks, track)
 	}
 }
 
