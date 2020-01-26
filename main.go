@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"os/exec"
 	"time"
@@ -19,7 +20,7 @@ func getCommand(streamURL, fileName string) string {
 }
 
 func runCommand(command string, args []string) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	cmd := exec.CommandContext(ctx, command, args...)
@@ -55,6 +56,7 @@ func main() {
 	var err error
 	var fileName string
 	playlist, err := m3u.Parse(os.Args[1])
+	success := m3u.Playlist{}
 	if err != nil {
 		panic(err)
 	}
@@ -68,5 +70,18 @@ func main() {
 		}
 		fmt.Print(" Screenshot saved to: " + fileName)
 		fmt.Println("")
+		success.Tracks = append(success.Tracks, track)
+	}
+	reader, err := m3u.Marshall(success)
+	if err != nil {
+		panic(err)
+	}
+	data, err := ioutil.ReadAll(reader)
+	if err != nil {
+		panic(err)
+	}
+	err = ioutil.WriteFile("suceess.m3u", data, 0644)
+	if err != nil {
+		panic(err)
 	}
 }
