@@ -9,6 +9,7 @@ import (
 	"os/exec"
 	"time"
 
+	"github.com/gammazero/workerpool"
 	"github.com/jamesnetherton/m3u"
 	"github.com/kennygrant/sanitize"
 )
@@ -52,26 +53,51 @@ func takeScreenshot(streamURL, fileName string) error {
 	})
 }
 
+func getJob(track m3u.Track, i, tracks int, success chan<- m3u.Track) func() {
+	return func() {
+		var b bytes.Buffer
+		fmt.Fprintf(&b, "[%d/%d] URI: %s Name: %s", i+1, tracks, track.URI, track.Name)
+		fileName := sanitize.BaseName(fmt.Sprintf("%s-%s", track.Name, time.Now().Format(time.RFC3339))) + ".png"
+		err := takeScreenshot(track.URI, fileName)
+		if err != nil {
+			fmt.Fprintln(&b, " ERROR")
+			fmt.Println(b.String())
+			return
+		}
+		fmt.Fprint(&b, " Screenshot saved to: "+fileName)
+		fmt.Println(b.String())
+		success <- track
+		//success.Tracks = append(success.Tracks, track)
+	}
+}
+
 func main() {
 	var err error
-	var fileName string
 	playlist, err := m3u.Parse(os.Args[1])
 	success := m3u.Playlist{}
 	if err != nil {
 		panic(err)
 	}
-	for i, track := range playlist.Tracks {
-		fmt.Printf("[%d/%d] URI: %s Name: %s", i+1, len(playlist.Tracks), track.URI, track.Name)
-		fileName = sanitize.BaseName(fmt.Sprintf("%s-%d-%s", time.Now().Format(time.RFC3339), i, track.Name)) + ".png"
-		err = takeScreenshot(track.URI, fileName)
-		if err != nil {
-			fmt.Println(" ERROR")
-			continue
-		}
-		fmt.Print(" Screenshot saved to: " + fileName)
-		fmt.Println("")
-		success.Tracks = append(success.Tracks, track)
+
+	results := make(chan m3u.Track)
+
+	wp := workerpool.New(5)
+	tracks := len(playlist.Tracks)
+	for i := range playlist.Tracks {
+		track := playlist.Tracks[i]
+		wp.Submit(getJob(track, i, tracks, results))
 	}
+
+	go func() {
+		for {
+			track := <-results
+			success.Tracks = append(success.Tracks, track)
+		}
+	}()
+
+	wp.StopWait()
+	close(results)
+
 	reader, err := m3u.Marshall(success)
 	if err != nil {
 		panic(err)

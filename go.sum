@@ -1,3 +1,7 @@
+github.com/gammazero/deque v0.0.0-20190521012701-46e4ffb7a622 h1:lxbhOGZ9pU3Kf8P6lFluUcE82yVZn2EqEf4+mWRNPV0=
+github.com/gammazero/deque v0.0.0-20190521012701-46e4ffb7a622/go.mod h1:D90+MBHVc9Sk1lJAbEVgws0eYEurY4mv2TDso3Nxh3w=
+github.com/gammazero/workerpool v0.0.0-20200124200352-1f57f023f98d h1:WvEtD4haMTH9j3hHDASRgxGebf8FwRY1qUb9R8IhGyg=
+github.com/gammazero/workerpool v0.0.0-20200124200352-1f57f023f98d/go.mod h1:ZObaTlXZGgqKXhhlk+zNvSOXT+h6VGThA0ZQxLqn8x0=
 github.com/jamesnetherton/m3u v0.3.0 h1:wrLW6YqUD8bJQ1VsUBswsYt1pRXLFc+lvFd2FYbXRlw=
 github.com/jamesnetherton/m3u v0.3.0/go.mod h1:YFaujUKOi5qfiqY3rjkB6ty3YWXBcys/6MuSOX5TrHs=
 github.com/kennygrant/sanitize v1.2.4 h1:gN25/otpP5vAsO2djbMhF/LQX6R7+O1TB4yv8NzpJ3o=
