@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
+	"runtime"
 	"time"
 
 	"github.com/gammazero/workerpool"
@@ -15,13 +16,14 @@ import (
 )
 
 const DEBUG = false
+const TIMEOUT_SEC = 5 * time.Second
 
 func getCommand(streamURL, fileName string) string {
 	return fmt.Sprintf("ffmpeg ", streamURL, fileName)
 }
 
 func runCommand(command string, args []string) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), TIMEOUT_SEC)
 	defer cancel()
 
 	cmd := exec.CommandContext(ctx, command, args...)
@@ -66,12 +68,18 @@ func getJob(track m3u.Track, i, tracks int, success chan<- m3u.Track) func() {
 		}
 		fmt.Fprint(&b, " Screenshot saved to: "+fileName)
 		fmt.Println(b.String())
+		track.Tags = append(track.Tags, m3u.Tag{"screenshot", fileName})
 		success <- track
 	}
 }
 
 func main() {
 	var err error
+	if len(os.Args) < 2 {
+		fmt.Printf(`Usage:
+	%s PLAYLIST`+"\n", os.Args[0])
+		return
+	}
 	playlist, err := m3u.Parse(os.Args[1])
 	success := m3u.Playlist{}
 	if err != nil {
@@ -79,8 +87,11 @@ func main() {
 	}
 
 	results := make(chan m3u.Track)
-
-	wp := workerpool.New(5)
+	var workers = runtime.NumCPU()
+	if workers > 1 {
+		workers--
+	}
+	wp := workerpool.New(workers)
 	tracks := len(playlist.Tracks)
 	for i := range playlist.Tracks {
 		track := playlist.Tracks[i]
