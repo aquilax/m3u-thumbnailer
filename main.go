@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/gammazero/workerpool"
-	"github.com/jamesnetherton/m3u"
+	"github.com/aquilax/m3u"
 	"github.com/kennygrant/sanitize"
 )
 

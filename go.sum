@@ -1,9 +1,11 @@
+github.com/aquilax/m3u v0.3.0 h1:0rOi+jAflNur6NjlquLx9a/rH3p3M9TQNqLboGSt1Ss=
+github.com/aquilax/m3u v0.3.0/go.mod h1:wIrj1rJMX9YLyZeFpWqVJtbGQ9ucu1/gu8f00/DtSxY=
+github.com/dimchansky/utfbom v1.1.0 h1:FcM3g+nofKgUteL8dm/UpdRXNC9KmADgTpLKsu0TRo4=
+github.com/dimchansky/utfbom v1.1.0/go.mod h1:rO41eb7gLfo8SF1jd9F8HplJm1Fewwi4mQvIirEdv+8=
 github.com/gammazero/deque v0.0.0-20190521012701-46e4ffb7a622 h1:lxbhOGZ9pU3Kf8P6lFluUcE82yVZn2EqEf4+mWRNPV0=
 github.com/gammazero/deque v0.0.0-20190521012701-46e4ffb7a622/go.mod h1:D90+MBHVc9Sk1lJAbEVgws0eYEurY4mv2TDso3Nxh3w=
 github.com/gammazero/workerpool v0.0.0-20200124200352-1f57f023f98d h1:WvEtD4haMTH9j3hHDASRgxGebf8FwRY1qUb9R8IhGyg=
 github.com/gammazero/workerpool v0.0.0-20200124200352-1f57f023f98d/go.mod h1:ZObaTlXZGgqKXhhlk+zNvSOXT+h6VGThA0ZQxLqn8x0=
-github.com/jamesnetherton/m3u v0.3.0 h1:wrLW6YqUD8bJQ1VsUBswsYt1pRXLFc+lvFd2FYbXRlw=
-github.com/jamesnetherton/m3u v0.3.0/go.mod h1:YFaujUKOi5qfiqY3rjkB6ty3YWXBcys/6MuSOX5TrHs=
 github.com/kennygrant/sanitize v1.2.4 h1:gN25/otpP5vAsO2djbMhF/LQX6R7+O1TB4yv8NzpJ3o=
 github.com/kennygrant/sanitize v1.2.4/go.mod h1:LGsjYYtgxbetdg5owWB2mpgUL6e2nfw2eObZ0u0qvak=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
