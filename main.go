@@ -116,7 +116,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	err = ioutil.WriteFile("suceess.m3u", data, 0644)
+	err = ioutil.WriteFile("succeess.m3u", data, 0644)
 	if err != nil {
 		panic(err)
 	}
