@@ -10,17 +10,13 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/gammazero/workerpool"
 	"github.com/aquilax/m3u"
+	"github.com/gammazero/workerpool"
 	"github.com/kennygrant/sanitize"
 )
 
 const DEBUG = false
 const TIMEOUT_SEC = 5 * time.Second
-
-func getCommand(streamURL, fileName string) string {
-	return fmt.Sprintf("ffmpeg ", streamURL, fileName)
-}
 
 func runCommand(command string, args []string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), TIMEOUT_SEC)
